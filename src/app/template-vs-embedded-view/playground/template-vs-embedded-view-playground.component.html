@@ -1,0 +1,44 @@
+<div class="container">
+  <h2>
+    Component Template vs Embedded View
+    <small>Playground: Custom structural directive</small>
+  </h2>
+  <div>
+    Parent component dirty checks:
+    <dirty-check-rounded></dirty-check-rounded>
+  </div>
+  <hr />
+  <div class="row" style="margin-bottom: 1rem;">
+    <div class="col-6">
+      <button (click)="btn1Click$.next($event)">
+        update asyncPipe value
+      </button>
+    </div>
+    <div class="col-6">
+      <button [unpatch] (click)="btn2Click$.next($event)">
+        update embeddedValue
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="view">
+        <div><strong>Async Pipe</strong></div>
+        <div>asyncValue: {{ value1$ | async }}</div>
+        <div>Dirty checks: <dirty-check-rounded></dirty-check-rounded></div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="view embedded">
+        <div><strong>EmbeddedViewRef *cdEmbeddedViewCustom</strong></div>
+        <!-- implement cdEmbeddedViewCustom here -->
+        <!-- add the dirty checks into the template: -->
+        <!--<div>Dirty checks: <dirty-check-rounded></dirty-check-rounded></div>-->
+        <ng-container *cdEmbeddedViewCustom="value2$; let val">
+          {{ val }}
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
