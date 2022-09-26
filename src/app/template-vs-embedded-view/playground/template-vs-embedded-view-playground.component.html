@@ -35,8 +35,9 @@
         <!-- implement cdEmbeddedViewCustom here -->
         <!-- add the dirty checks into the template: -->
         <!--<div>Dirty checks: <dirty-check-rounded></dirty-check-rounded></div>-->
-        <ng-container *cdEmbeddedViewCustom="value2$; let val">
-          {{ val }}
+        <ng-container *cdEmbeddedViewCustom="value2$; let val;">
+          <div>Value: {{ val }}</div>
+          <div>Dirty checks: <dirty-check-rounded></dirty-check-rounded></div>
         </ng-container>
       </div>
     </div>

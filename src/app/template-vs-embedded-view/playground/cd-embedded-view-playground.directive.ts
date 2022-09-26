@@ -19,10 +19,27 @@ export class CdEmbeddedViewPlaygroundDirective implements OnInit, OnDestroy {
 
   @Input() cdEmbeddedViewCustom: Observable<any>;
 
-  constructor() // inject parts to maintain embeddedViews
+  constructor(
+    private viewContainer: ViewContainerRef,
+    private template: TemplateRef<any>
+  ) // inject parts to maintain embeddedViews
   {}
 
   ngOnInit(): void {
+    let view: EmbeddedViewRef<any>;
+    // view.detach();
+    this.cdEmbeddedViewCustom.subscribe(value => {
+      if (!view) {
+        view = this.viewContainer.createEmbeddedView(
+          this.template
+        );
+        view.detach();
+      }
+      view.context = {
+        $implicit: value
+      };
+      view.detectChanges();
+    });
     // handle subscription to values$
     // create embeddedView on first emission
     // update embeddedView if already created
@@ -31,6 +48,7 @@ export class CdEmbeddedViewPlaygroundDirective implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // clear viewcontainer
+    this.viewContainer?.clear();
     this.subscription?.unsubscribe();
   }
 }
